@@ -32,25 +32,50 @@ class MainMenuActivity : AppCompatActivity() {
         }
 
         binding.playeVsButton.setOnClickListener{
-            db.collection("users").document(binding.editTextId.text.toString())
-                .get().addOnSuccessListener {
-                    if(it.exists()) {
-                        val intent = Intent(this@MainMenuActivity, GameActivity::class.java)
-                        intent.putExtra("vsID", binding.editTextId.text.toString())
-                        startActivity(intent)
-                        finish()
-                    }
-                    else
-                        Toast.makeText(
-                            baseContext, "ID Nao Existe",
-                            Toast.LENGTH_SHORT).show()
 
-                }.addOnFailureListener{
-                    Toast.makeText(
-                        baseContext, "Falha ao Tentar Ler",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+          if(binding.editTextId.text.toString()!="") {
+
+              db.collection("users").whereEqualTo("Email", binding.editTextId.text.toString())
+                  .get().addOnSuccessListener {
+                      var emailid: String = ""
+                      for (doc in it) {
+                          emailid = doc.id
+                          val intent = Intent(this@MainMenuActivity, GameActivity::class.java)
+                          intent.putExtra("vsID", emailid)
+                          startActivity(intent)
+                          finish()
+                      }
+                  }
+
+              db.collection("users").document(binding.editTextId.text.toString())
+                  .get().addOnSuccessListener {
+                      if (it.exists()) {
+                          val intent = Intent(this@MainMenuActivity, GameActivity::class.java)
+                          intent.putExtra("vsID", binding.editTextId.text.toString())
+                          startActivity(intent)
+                          finish()
+                      }
+                      // else
+
+                      // Toast.makeText(
+                      //     baseContext, "ID Nao Existe",
+                      //     Toast.LENGTH_SHORT).show()
+
+                  }.addOnFailureListener {
+                      Toast.makeText(
+                          baseContext, "Falha ao Tentar Ler",
+                          Toast.LENGTH_SHORT
+                      ).show()
+                  }
+          }else
+              Toast.makeText(
+                  baseContext, "Campo de ID Vazio",
+                  Toast.LENGTH_SHORT
+              ).show()
+
+
+
+
         }
 
         binding.buttonLogout.setOnClickListener{

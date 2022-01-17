@@ -52,13 +52,13 @@ class GameView : SurfaceView, Runnable {
 
         var name:String=""
 
-    var maxpoints:Int=0
+        var maxpoints:Int=0
 
-    var name2:String=""
+        var name2:String=""
 
-    var maxpoints2:Int=0
+        var maxpoints2:Int=0
 
-    var pontos2:Int=0
+        var pontos2:Int=0
 
         constructor(context: Context?, screenWidht:Int, screenHeight:Int,uid2:String?) : super(context){
             init(context,screenWidht,screenHeight,uid2)
@@ -91,9 +91,7 @@ class GameView : SurfaceView, Runnable {
                     user= User.fromHashMap(it.data as Map<String, Any>)
                     name=user.name.toString()
                     maxpoints= user.maxPoints?.toInt()!!
-                    Toast.makeText(context, user.lastPoints.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+
                 }.addOnFailureListener{
                     Log.d(TAG, "Failed to Load Current Data\n\n\n")
                 }

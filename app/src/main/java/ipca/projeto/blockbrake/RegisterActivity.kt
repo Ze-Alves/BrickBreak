@@ -40,7 +40,8 @@ class RegisterActivity : AppCompatActivity() {
                     val user = hashMapOf(
                         "Name" to binding.editTextName.text.toString(),
                         "LastPoints" to 0,
-                        "MaxPoints" to 0
+                        "MaxPoints" to 0,
+                        "Email" to binding.editEmailReg.text.toString()
                     )
 
                     storage.collection("users").document(uid)
